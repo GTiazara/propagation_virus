@@ -602,11 +602,11 @@ const geometry_layer = layerCoord.layer;
 const ListMesh = layerCoord.coords // List Mesh
 ;
 let copiedListMesh;
-console.log("test");
+// console.log("test");
 // console.log(ListMesh);
 view.addLayer(geometry_layer);
 // Durée de l'animation (en secondes)
-var duration = 1000;
+var duration = 100;
 var elapsed = 0;
 var initPos = {};
 var i = 0;
@@ -670,17 +670,24 @@ view.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, function globe
     // console.log(ListMesh);
     // updateAgent(ListMesh)
     copiedListMesh = JSON.parse(JSON.stringify(ListMesh));
-    console.log(copiedListMesh);
+    // console.log(copiedListMesh)
     animate();
 });
 function updatePos(mesh, meshPosition, destinationPosition, elapsed) {
     elapsed++;
-    console.log(elapsed);
+    // console.log(elapsed)
     // Interpolation linéaire entre les deux points
-    var t = elapsed / (duration * 1000);
+    var t = elapsed / (duration * 10000);
     mesh.position.lerpVectors(meshPosition, destinationPosition, t);
     mesh.updateMatrixWorld();
     return elapsed;
+}
+function distance(x, y, x1, y1) {
+    this.x = x;
+    this.y = y;
+    this.x1 = x1;
+    this.y1 = y1;
+    return Math.sqrt(Math.pow(this.x1 - this.x, 2) + Math.pow(this.y1 - this.y, 2));
 }
 
 },{"./models/wmts":"c82T1","./models/elevation":"2x72h","./models/building":"8WZDc"}],"c82T1":[function(require,module,exports) {
@@ -820,7 +827,7 @@ function buildingLayer(serverURL, nameType, crs, zoomMinLayer, extent, view) {
                 let count = 0;
                 geoms.map((goem)=>{
                     count++;
-                    if (count % 70 == 0) {
+                    if (count % 20 == 0) {
                         let id = goem.properties.id;
                         // console.log(id)
                         ListMesh[id] = {
