@@ -591,12 +591,12 @@ let view = new itowns.GlobeView(viewerDiv, placement, {
 const atmosphere = view.getLayerById("atmosphere");
 atmosphere.setRealisticOn(true);
 // WMTS Layer
-const wmts_layer = (0, _wmts.wmtsLayer)("http://wxs.ign.fr/3ht7xcw6f7nciopo16etuqp2/geoportail/wmts", "EPSG:3857", "ORTHOIMAGERY.ORTHOPHOTOS", "PM", "image/jpeg");
+const wmts_layer = (0, _wmts.wmtsLayer)("https://wxs.ign.fr/3ht7xcw6f7nciopo16etuqp2/geoportail/wmts", "EPSG:3857", "ORTHOIMAGERY.ORTHOPHOTOS", "PM", "image/jpeg");
 view.addLayer(wmts_layer);
 // Elevation
-const elevation_layer = (0, _elevation.elevationLayer)("http://wxs.ign.fr/3ht7xcw6f7nciopo16etuqp2/geoportail/wmts", "EPSG:4326", "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES", "WGS84G", "image/x-bil;bits=32");
+const elevation_layer = (0, _elevation.elevationLayer)("https://wxs.ign.fr/3ht7xcw6f7nciopo16etuqp2/geoportail/wmts", "EPSG:4326", "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES", "WGS84G", "image/x-bil;bits=32");
 view.addLayer(elevation_layer);
-const layerCoord = (0, _building.buildingLayer)("http://wxs.ign.fr/3ht7xcw6f7nciopo16etuqp2/geoportail/wfs?", "BDTOPO_BDD_WLD_WGS84G:bati_indifferencie", "EPSG:4326", 14, extent, view);
+const layerCoord = (0, _building.buildingLayer)("https://wxs.ign.fr/3ht7xcw6f7nciopo16etuqp2/geoportail/wfs?", "BDTOPO_BDD_WLD_WGS84G:bati_indifferencie", "EPSG:4326", 14, extent, view);
 //  GeometryLayer
 const geometry_layer = layerCoord.layer;
 const ListMesh = layerCoord.coords // List Mesh
