@@ -606,7 +606,7 @@ let copiedListMesh;
 // console.log(ListMesh);
 view.addLayer(geometry_layer);
 // Durée de l'animation (en secondes)
-var duration = 1000;
+var duration = 100;
 var elapsed = 0;
 var initPos = {};
 var i = 0;
@@ -623,13 +623,25 @@ function updateAgent(ListMesh) {
             if (val.meshFantom && val.meshFantom.mesh) {
                 val.meshFantom.mesh.position.copy(val.mesh.position);
                 val.meshFantom.mesh.updateMatrixWorld();
+                // contamination par la proximité 
+                Object.entries(ListMesh).forEach(function([keyb, valb]) {
+                    // console.log(val.meshFantom.mesh.position.distanceTo(valb.mesh.position))
+                    if (val.meshFantom.mesh.position.distanceTo(valb.mesh.position) < 4 && val.meshFantom.mesh.position.distanceTo(valb.mesh.position) > 1) {
+                        if (valb.mesh.material.color.r != 1) {
+                            // console.log(" contamination par la proximité")
+                            valb.mesh.material.color.set("rgb(255, 0, 0)");
+                            // console.log(val.mesh.position.x)
+                            valb.meshFantom = (0, _building.addFantom)(valb.mesh.position.x, valb.mesh.position.y, valb.mesh.position.z, view);
+                        }
+                    }
+                });
             }
-            // console.log(val.mesh.position.distanceTo(val.destination))
+            //contamitation par arriver à destination
             if (val.mesh.position.distanceTo(val.destination) < 50) {
                 if (val.elapsed > 1) {
                     if (val.mesh.material.color.r != 1) {
                         val.mesh.material.color.set("rgb(255, 0, 0)");
-                        // console.log(val.mesh.position.x)
+                        // console.log(contamitation par arriver à destination)
                         val.meshFantom = (0, _building.addFantom)(val.mesh.position.x, val.mesh.position.y, val.mesh.position.z, view);
                     }
                 }
@@ -914,10 +926,10 @@ function addFantom(x, y, z, view) {
         }
     };
     const manager = new THREE.LoadingManager(()=>{
-        console.log("loaded");
+    // console.log('loaded')
     }, // Progress
     ()=>{
-        console.log("progress");
+    // console.log('progress')
     });
     {
         const gltfLoader = new (0, _gltfloaderJs.GLTFLoader)(manager);
